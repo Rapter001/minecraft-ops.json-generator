@@ -3,10 +3,9 @@ Minecraft Server Ops Generator is a Python-based tool designed to simplify the p
 
 ## Features
 
-- **User-Friendly Interface**: Easily add, edit, or remove operators.
+- **User-Friendly Interface**: Easily add operators.
 - **Permission Levels**: Assign specific permission levels to operators.
 - **JSON Export**: Generate a valid `ops.json` file for your server.
-- **Cross-Platform**: Works on Windows, macOS, and Linux.
 
 ## Installation
 
