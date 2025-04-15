@@ -37,6 +37,35 @@ Minecraft Server Ops Generator is a Python-based tool designed to simplify the p
 2. Follow the on-screen instructions to manage your server operators.
 3. Export the `ops.json` file and place it in your Minecraft server directory.
 
+## Deploy via Docker
+
+You can either build the Docker image locally or pull it directly from Docker Hub.
+
+### Option 1: Build Locally
+1. Build the Docker image:
+    ```bash
+    docker build -t minecraft-server-ops-generator .
+    ```
+2. Run the Docker container:
+    ```bash
+    docker run -d -p 5000:5000 --name minecraft-server-ops-generator --restart=on-failure rapter001/minecraft-server-ops-generator:latest
+    ```
+
+3. Follow the on-screen instructions inside the container to manage your server operators.
+
+### Option 2: Pull from Docker Hub
+
+1. Pull the pre-built Docker image:
+    ```bash
+    docker pull rapter001/minecraft-server-ops-generator:latest
+    ```
+2. Run the Docker container:
+    ```bash
+    docker run -d -p 5000:5000 --name minecraft-server-ops-generator --restart=on-failure rapter001/minecraft-server-ops-generator:latest
+    ```
+
+3. Follow the on-screen instructions inside the container to manage your server operators.
+
 ## Contributing
 
 Contributions are welcome! Please follow these steps:
