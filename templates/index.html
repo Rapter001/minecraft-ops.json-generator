@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Rapter001 | Minecraft ops.json generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="{{ url_for('static', filename='img/rapter.png') }}" type="image/x-icon">
+  <meta name="description" content="Minecraft ops.json generator by Rapter001. Easily create and manage your Minecraft server operator files.">
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col items-center justify-center px-4 py-8">
+  <!-- Container -->
+  <div class="w-full max-w-md bg-white shadow-lg rounded-xl p-6 space-y-6">
+
+    <!-- Logo + Branding -->
+    <div class="flex flex-col items-center">
+      <img src="{{ url_for('static', filename='img/rapter.png') }}" alt="rapter" class="h-16 mb-2" draggable="false">
+      <h1 class="text-2xl font-bold text-gray-800 text-center">Minecraft ops.json generator</h1>
+      <p class="text-sm text-gray-500 text-center">by Rapter001</p>
+    </div>
+
+    <!-- Form -->
+    <form id="opsForm" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Minecraft Username</label>
+        <input type="text" name="name" required class="mt-1 block w-full p-2 border rounded focus:ring focus:ring-blue-400" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Operator Level (1–4)</label>
+        <input type="number" name="level" min="1" max="4" required class="mt-1 block w-full p-2 border rounded focus:ring focus:ring-blue-400" />
+      </div>
+      <div class="flex items-center space-x-2">
+        <input type="checkbox" name="bypass" id="bypass" class="h-4 w-4 text-blue-600">
+        <label for="bypass" class="text-sm text-gray-700">Bypass Player Limit</label>
+      </div>
+      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
+        Generate JSON
+      </button>
+    </form>
+
+    <!-- Result -->
+    <div>
+      <h2 class="text-base font-semibold text-gray-700">Generated ops.json</h2>
+      <pre id="result" class="bg-gray-100 p-4 mt-2 rounded text-sm whitespace-pre-wrap break-words"></pre>
+      <button id="copyBtn" class="mt-2 w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition hidden">
+        Copy JSON
+      </button>
+      <span id="copyMsg" class="text-sm text-green-700 block text-center mt-2 hidden">Copied!</span>
+    </div>
+
+  </div>
+
+  <!-- Footer/Links -->
+  <footer class="mt-8 text-center text-sm text-gray-500">
+    <p>Made with ❤️ by <a href="https://rapter.pages.dev/links" target="_blank" class="text-blue-600 hover:underline">Rapter001</a></p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    const result = document.getElementById('result');
+    const copyBtn = document.getElementById('copyBtn');
+    const copyMsg = document.getElementById('copyMsg');
+
+    document.getElementById('opsForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+
+      const response = await fetch('/generate', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const jsonString = JSON.stringify(data, null, 2);
+        result.textContent = jsonString;
+        copyBtn.classList.remove('hidden');
+        copyMsg.classList.add('hidden');
+      } else {
+        const error = await response.json();
+        result.textContent = `Error: ${error.error}`;
+        copyBtn.classList.add('hidden');
+        copyMsg.classList.add('hidden');
+      }
+    });
+
+    copyBtn.addEventListener('click', () => {
+      const text = result.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        copyMsg.classList.remove('hidden');
+        setTimeout(() => copyMsg.classList.add('hidden'), 2000);
+      });
+    });
+  </script>
+</body>
+</html>
