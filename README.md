@@ -12,7 +12,7 @@ Minecraft Server Ops Generator is a Python-based tool designed to simplify the p
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/Rapter001/minecraft-ops.json-generator.git
+    git clone https://github.com/Rapter001/minecraft-server-ops.json-generator.git
     ```
 2. Navigate to the project directory:
     ```bash
